@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Plant Kingdom</title>
+<!--Tailwind-daisy ui-->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<style>
+    .style {
+      background-color: #FACC15;
+      color: #15803D;
+      border-radius: 20px;
+    
+    }
+    * {
+        font-family: sans-serif;
+    }
+</style>
+</head>
+<body>
+    <navbar>
+<div class="navbar bg-[#15803D] text-white shadow-sm justify-around">
+  <div class="">    
+    <a class="btn btn-ghost text-2xl">Green Earth</a>
+  </div>
+  <div class=" ">
+    <ul class="menu menu-horizontal gap-6 text-[16px] font-medium px-1">
+      <li><a>About</a></li>
+      <li>
+       <a>Gallery</a>
+      </li>
+      <li><a>Plant a Tree</a></li>
+    </ul>
+  </div>
+  <div class="">
+    <a class="btn style  text-[16px] font-medium">Plant a Tree</a>
+  </div>
+</div>
+    </navbar>
+
+    <header class="grid grid-cols-3 bg-green-100 ">
+        <div><img src="assets/hero-leaf1.png"></div>
+        <div class="text-center space-y-5">
+            <h1 class="text-5xl font-bold pt-18">Plant a Tree, Grow a Future</h1>
+            <p class=" text-[16px] font-normal"> Join our mission to plant 1 million trees and make the Earth greener for future generations.</p>
+             <div class="">
+             <a class="btn style  text-[16px] font-medium">Get Involved</a>
+            </div>
+        </div>
+        <div><img src="assets/hero-leaf2.png"></div>
+    </header>
+<!--pain-->
+  <main class="container mx-auto">
+
+
+
+
+        <h2 class="text-[#4ade80] font-bold text-4xl text-center">Choose Your Trees</h2>
+
+        <div class="grid grid-cols-12 gap-8">
+
+            <!-- Categories -->
+            <div class="bg-white card card-body shadow-2xl col-span-3">
+                <h2 class="font-bold text-2xl text-center">Categories</h2>
+                <div class="space-y-3 sticky top-8">
+                    <button class="btn btn-primary w-full" id="allTreesbtn">All Trees</button>
+
+                    <!-- Categories container -->
+                    <div id="categoriesContainer" class="space-y-3">
+                        <!-- Categories will be dynamically loaded here by JS -->
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Trees -->
+            <div class="bg-white card card-body shadow-2xl col-span-6">
+                <!-- Trees will rendered -->
+                <div id="treesContainer" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <!-- Dynamically added here -->
+                    <!-- <div class="card bg-white shadow-sm">
+                        <figure>
+                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                                alt="Shoes" />
+                        </figure>
+                        <div class="card-body">
+                            <h2 class="card-title">Card Title</h2>
+                            <p class="line-clamp-2">A card component has a figure, a body part, and inside body there
+                                are title and actions lorem1500
+                                parts</p>
+                            <div class="badge badge-success badge-outline">Success</div>
+
+                            <div class="flex justify-between items-center">
+                                <h2 class="font-bold text-xl text-[#4ade80]">$5000</h2>
+                                <button class="btn btn-primary ">Buy Now</button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- loading spinner -->
+                <div id="loadingSpinner" class="h-[60vh] flex hidden justify-center items-center">
+                    <span class="loading loading-dots loading-xl"></span>
+                </div>
+
+
+            </div>
+
+            <!-- Cart -->
+            <div class="bg-white card card-body shadow-2xl col-span-3">
+                <h2 class="font-bold text-3xl mb-2">Cart</h2>
+
+                <div class="space-y-4">
+                    <div id="cartContainer" class="space-y-4">
+                        <!-- <div class="card card-body bg-slate-100">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h2>Name</h2>
+                                    <p> $2000 × 10</p>
+                                </div>
+                                <button class="btn btn-ghost">X</button>
+                            </div>
+                            <p class="text-right font-semibold text-xl">$500</p>
+                        </div> -->
+                    </div>
+
+                    <div id="emptyCartMessage" class="text-center py-4">
+                        <p>Your cart is empty</p>
+                        <p>Add trees to get started</p>
+                    </div>
+
+
+                    <!-- Total amount -->
+                    <div class="flex justify-between items-center bg-green-50 rounded-lg p-4 my-3 font-bold">
+                        <span>Total:</span>
+                        <span id="totalPrice">$0</span>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <!-- Product details modal -->
+        <dialog id="tree-details-modal" class="modal">
+            <div class="modal-box">
+
+                <!-- Modal Header with Close Button -->
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="font-bold text-2xl text-green-700" id="modalTitle">Tree Details</h3>
+                    <button class="btn btn-sm btn-circle btn-ghost"
+                        onclick="document.getElementById('tree-details-modal').close()">✕</button>
+                </div>
+
+                <!-- Modal Content -->
+                <div class=" gap-6">
+                    <!-- Plant Image -->
+                    <img id="modalImage" src="" alt="plant" class="w-full !h-[250px] object-cover rounded-lg mb-12">
+
+                    <!-- Plant Details -->
+                    <div class="">
+                        <p class="text-sm text-gray-500 mb-2">
+                            <span class="font-bold">Category:</span>
+                            <span id="modalCategory" class="badge badge-primary"></span>
+                        </p>
+                        <p class="text-sm text-gray-600 mb-4">
+                            <span id="modalDescription"></span>
+                        </p>
+                        <div class="flex items-baseline gap-2 mb-6">
+                            <span class="text-3xl font-bold text-green-600">$<span id="modalPrice">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+
+
+    </main>
+
+
+
+
+<section class="bg-green-50">
+    <div class="w-6/12 mx-auto pt-18 pb-10">
+    <h1 class="text-[32px] font-semibold text-neutral-900 text-center pb-8">About the Campaign</h1>
+    <div class="grid grid-cols-2 gap-8">
+        <div class=""><img src="assets/about.png"></div>
+        <div class="space-y-6 flex flex-col justify-center items-center"><p class="text-[16px] font-normal text-gray-800   ">Green Earth is a global tree plantation initiative dedicated to fighting climate change. Since our start, we’ve planted over 500,000 trees worldwide. By joining our campaign, you help restore forests, create habitats for wildlife, and combat global warming. </p>
+        <ul class="list-disc list-inside text-[16px] font-normal text-gray-500 " >
+       <li>Restoration of natural habitats</li>
+       <li>Improvement of air quality</li>
+       <li>Support for local communities</li>
+</ul>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section class="bg-green-100 text-center ">
+    <div class="w-10/12 mx-auto pb-18">
+  <h1 class="text-[32px] font-semibold text-neutral-700 pt-12 pb-6">Our Import</h1>
+  <!--card 1-->
+  <div class="grid grid-cols-3 gap-12">
+  <div class="card bg-base-100  shadow-sm">
+  <div class="card-body">
+    <h1 class="text-[32px] font-semibold text-green-500">500K+</h1>
+    <p class="text-[16px] font-normal text-gray-500"> Trees Planted </p>
+  </div>
+</div>
+ <!--card 2-->
+  <div class="card bg-base-100  shadow-sm">
+  <div class="card-body">
+    <h1 class="text-[32px] font-semibold text-green-500">200+</h1>
+    <p class="text-[16px] font-normal text-gray-500"> Communities Involved </p>
+  </div>
+</div>
+ <!--card 3-->
+  <div class="card bg-base-100  shadow-sm">
+  <div class="card-body">
+    <h1 class="text-[32px] font-semibold text-green-500">30+</h1>
+    <p class="text-[16px] font-normal text-gray-500"> Countries reached </p>
+  </div>
+</div>
+  </div>
+    </div>
+</section>
+
+
+<section class="bg-green-800 pt-12 pb-12">
+    <div class=" w-3/12 mx-auto">
+  <h1 class="text-[32px] font-semibold text-white pb-6">Plant a Tree Today</h1>
+  <fieldset class="fieldset bg-green-700  rounded-box w-xs  p-4">
+
+
+<input type="text" class="input" placeholder="Your Name">
+  <input type=" email" class="input" placeholder="Your Email Address" />
+  <input type="text" class="input" placeholder="Number of Trees" />
+ <div class="">
+             <a class="btn style block flex justify-center items-center text-[16px] font-medium mt-4">Donate now</a>
+            </div>
+  
+</fieldset>
+</div>
+
+</section>
+<footer class="text-center bg-green-900 text-neutral-300 pt-6 pb-6">
+    <p class="text-[16px] font-normal "> © 2025 Green Earth. All Rights Reserved.</p>
+</footer>
+
+
+<script src="pain.js"></script>
+</body>
+</html>
