@@ -26,7 +26,7 @@ The Plant Kingdom is a static frontend website designed to provide plant informa
 ---
 
 ## 📸 Screenshot
-Add screenshot of homepage here
+![The Plant Kingdom Screenshot](https://github.com/sumaiya7-ops/The-Plant-Kingdom/blob/main/assets/screenshot.png)
 
 ---
 
