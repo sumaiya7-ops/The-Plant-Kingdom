@@ -2,7 +2,7 @@
 
 An educational UI project showcasing plant categories, growth stages, and information.
 
-🔗 Live Demo: Add your deployed link here
+🔗 Live Demo: [Click Here](https://sumaiya7-ops.github.io/The-Plant-Kingdom/)
 
 ---
 
